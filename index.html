@@ -223,6 +223,8 @@
 
     .timer-card {
       display: inline-block;
+      max-width: min(520px, calc(100vw - 2rem));
+      width: max-content;
       border: 1px solid rgba(255,45,120,0.25);
       border-radius: 1.5rem;
       padding: 2rem 2.5rem 1.5rem;
@@ -275,7 +277,7 @@
     }
 
     .cblock span {
-      font-size: clamp(3rem, 10vw, 6rem);
+      font-size: clamp(2rem, 8vw, 6rem);
       font-weight: 900;
       color: #ff2d78;
       line-height: 1;
@@ -706,7 +708,7 @@
       if (p.y < H + 20) anyVisible = true;
       p.tiltAngle += p.tiltSpeed;
       p.y += Math.cos(angle + p.d) + 1.5;
-      p.x += Math.sin(angle) * 0.5;
+      p.x += Math.sin(angle + p.d) * 0.5;
       const tilt = Math.sin(p.tiltAngle) * 12;
       ctx.beginPath();
       ctx.lineWidth = p.r;
