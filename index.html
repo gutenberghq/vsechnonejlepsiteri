@@ -223,13 +223,16 @@
 
     .timer-card {
       display: inline-block;
-      max-width: min(520px, calc(100vw - 2rem));
-      width: max-content;
       border: 1px solid rgba(255,45,120,0.25);
       border-radius: 1.5rem;
       padding: 2rem 2.5rem 1.5rem;
       margin: 1.5rem 0 2.5rem;
       background: rgba(255,45,120,0.04);
+    }
+
+    @media (max-width: 500px) {
+      .timer-card { padding: 1.5rem 1rem 1.2rem; }
+      .countdown { gap: 0.5rem; }
     }
 
     .kara-btn {
