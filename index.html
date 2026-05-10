@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vše nejlepší Terko 🎂</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Space+Grotesk:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0d0d0d;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── POPUP ── */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .popup-box {
+      background: #1a1a1a;
+      border: 2px solid #ff2d78;
+      border-radius: 2rem;
+      padding: 3rem 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(255,45,120,0.3);
+      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .popup-box .popup-icon { font-size: 4rem; margin-bottom: 1rem; }
+
+    .popup-box h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.8rem;
+      color: #ff2d78;
+      margin-bottom: 1rem;
+    }
+
+    .popup-box p {
+      color: #aaa;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .popup-box p strong { color: #ffe600; }
+
+    .popup-btn {
+      background: linear-gradient(135deg, #ff2d78, #ff9500);
+      color: #fff;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(255,45,120,0.4);
+    }
+
+    .popup-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 30px rgba(255,45,120,0.6);
+    }
+
+    .popup-btn:active { transform: scale(0.97); }
+
+    /* ── CONFETTI ── */
+    #confetti { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999; }
+
+    section { position: relative; z-index: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: radial-gradient(ellipse at center, #1a0033 0%, #0d0d0d 70%);
+    }
+
+    .hero .tag {
+      background: #ff2d78;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,45,120,0.5); }
+      50% { box-shadow: 0 0 0 12px rgba(255,45,120,0); }
+    }
+
+    .hero h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(3rem, 10vw, 8rem);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 .grad {
+      color: #ff2d78;
+      animation: colorShift 4s ease-in-out infinite;
+    }
+
+    @keyframes colorShift {
+      0%   { color: #ff2d78; text-shadow: 0 0 30px rgba(255,45,120,0.6); }
+      33%  { color: #ff9500; text-shadow: 0 0 30px rgba(255,149,0,0.6); }
+      66%  { color: #ffe600; text-shadow: 0 0 30px rgba(255,230,0,0.6); }
+      100% { color: #ff2d78; text-shadow: 0 0 30px rgba(255,45,120,0.6); }
+    }
+
+
+
+    .hero .age {
+      font-size: clamp(5rem, 20vw, 14rem);
+      font-weight: 900;
+      line-height: 1;
+      color: #ff2d78;
+      text-shadow: 0 0 40px rgba(255,45,120,0.4), 0 0 80px rgba(255,45,120,0.2);
+      margin-bottom: 1rem;
+      animation: wobble 3s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-1deg); }
+      50% { transform: rotate(1deg); }
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: #aaa;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .hero .subtitle em {
+      color: #ff9500;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .terka-name {
+      color: #00e5ff;
+      animation: colorShiftCyan 4s ease-in-out infinite;
+      letter-spacing: 0.05em;
+    }
+
+    @keyframes colorShiftCyan {
+      0%   { color: #00e5ff; text-shadow: 0 0 30px rgba(0,229,255,0.6); }
+      50%  { color: #00ff99; text-shadow: 0 0 30px rgba(0,255,153,0.6); }
+      100% { color: #00e5ff; text-shadow: 0 0 30px rgba(0,229,255,0.6); }
+    }
+
+    .scroll-hint {
+      margin-top: 3rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ff2d78;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* ── GOOD STUFF ── */
+    .good {
+      padding: 6rem 2rem;
+      background: radial-gradient(ellipse at center, #001a33 0%, #0d0d0d 70%);
+      text-align: center;
+    }
+
+    .good p {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #aaa;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+
+    .good p strong { color: #fff; }
+
+    p.timer-label {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      color: #aaa;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 0 !important;
+    }
+
+    .timer-card {
+      display: inline-block;
+      border: 1px solid rgba(255,45,120,0.25);
+      border-radius: 1.5rem;
+      padding: 2rem 2.5rem 1.5rem;
+      margin: 1.5rem 0 2.5rem;
+      background: rgba(255,45,120,0.04);
+    }
+
+    .kara-btn {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.4rem 0.9rem;
+      background: rgba(255,149,0,0.12);
+      border: 1px solid rgba(255,149,0,0.4);
+      border-radius: 0.6rem;
+      color: #ff9500;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .kara-btn:hover {
+      background: rgba(255,149,0,0.22);
+      border-color: rgba(255,149,0,0.7);
+    }
+
+    .timer-destination {
+      border-top: 1px solid rgba(255,45,120,0.2);
+      margin-top: 1rem;
+      padding: 0.75rem 0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #ff9500;
+    }
+
+    .countdown {
+      display: flex;
+      gap: clamp(1rem, 4vw, 2.5rem);
+      justify-content: center;
+      margin: 0;
+    }
+
+    .cblock {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cblock span {
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight: 900;
+      color: #ff2d78;
+      line-height: 1;
+      text-shadow: 0 0 30px rgba(255,45,120,0.4);
+      font-family: 'Space Grotesk', sans-serif;
+      font-variant-numeric: tabular-nums;
+      min-width: 2ch;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .cblock label {
+      font-size: 0.75rem;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 0.4rem;
+    }
+
+    .big-heart {
+      font-size: 6rem;
+      animation: heartbeat 1.2s ease-in-out infinite;
+      display: block;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.15); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.1); }
+      56% { transform: scale(1); }
+    }
+
+    /* ── CAKE ── */
+    .cake-section {
+      padding: 6rem 2rem;
+      text-align: center;
+      background: radial-gradient(ellipse at center, #1a0a00 0%, #0d0d0d 70%);
+    }
+
+    .cake-section h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: #ff9500;
+      margin-bottom: 0.5rem;
+    }
+
+    .cake-section .cake-sub {
+      color: #ff9500;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 3rem;
+    }
+
+    .cake-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      transition: transform 0.2s;
+      user-select: none;
+    }
+
+    .cake-wrap:hover { transform: scale(1.06); }
+
+    .cake-emoji-big {
+      font-size: 9rem;
+      line-height: 1;
+      filter: drop-shadow(0 0 24px rgba(255,149,0,0.5));
+      display: block;
+      transition: filter 0.6s;
+    }
+
+    .cake-wrap:hover .cake-emoji-big {
+      filter: drop-shadow(0 0 40px rgba(255,149,0,0.8));
+    }
+
+    .cake-emoji-big.blown,
+    .cake-wrap:hover .cake-emoji-big.blown {
+      filter: grayscale(1) brightness(0.5);
+    }
+
+    .candle-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.6rem;
+      max-width: 200px;
+      margin: 0 auto 1.5rem;
+      justify-items: center;
+    }
+
+    .candle {
+      font-size: 2rem;
+      filter: drop-shadow(0 0 6px rgba(255,200,50,0.9));
+      animation: flicker 0.7s ease-in-out infinite alternate;
+      animation-delay: calc(var(--i) * 0.06s);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .candle.out {
+      filter: none;
+      opacity: 0.25;
+      animation: none;
+      transform: scale(0.85);
+    }
+
+    @keyframes flicker {
+      from { transform: scale(1);    opacity: 1; }
+      to   { transform: scale(0.92); opacity: 0.75; }
+    }
+
+    .cake-hint {
+      color: #ff9500;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin: 0.5rem 0 2rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #fff;
+      font-size: 0.85rem;
+    }
+
+    /* ── SLIDESHOW ── */
+    .slideshow-section {
+      padding: 6rem 2rem;
+      background: #0d0d0d;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .slideshow-section h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: #ffe600;
+      margin-bottom: 0.5rem;
+    }
+
+    .slideshow-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .slides {
+      position: relative;
+      height: 640px;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.85) rotate(var(--tilt));
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.3,0.64,1);
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1) rotate(var(--tilt));
+      pointer-events: auto;
+    }
+
+    .slide.exit-left {
+      opacity: 0;
+      transform: scale(0.8) translateX(-120%) rotate(calc(var(--tilt) - 10deg));
+    }
+
+    .polaroid {
+      background: #fff;
+      padding: 14px 14px 14px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      display: inline-block;
+      max-width: 480px;
+      width: 95%;
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: 460px;
+      object-fit: cover;
+      display: block;
+      image-orientation: from-image;
+    }
+
+    img { image-orientation: from-image; }
+  </style>
+</head>
+<body>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <div class="popup-icon">🚨</div>
+    <h2>Pozor!</h2>
+    <p>Vstup na tento web je povolen pouze<br><strong>důchodcům nad 25 let.</strong></p>
+    <button class="popup-btn" id="popupBtn">
+      Ano, jsem extrémně stará 🦕
+    </button>
+  </div>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="tag">⚠️ Varování: Za chvíli tě začnou bolet kolena ⚠️</span>
+  <h1><span class="grad">Všechno nejlepší</span><br><span class="terka-name">Ter&zwnj;i!</span></h1>
+  <div class="age">25</div>
+  <p class="subtitle">
+    <em>Čtvrt století</em> existence.<br>
+    Gratuluju!
+  </p>
+  <p class="scroll-hint">↓ BUDE HŮŘ ↓</p>
+</section>
+
+<!-- SLIDESHOW -->
+<section class="slideshow-section">
+  <h2>Už nejsi nejmladší</h2>
+  <p style="color:#777; font-size:1.1rem; margin-top:0.5rem; margin-bottom:3rem;">ale to vůbec nevadí</p>
+  <div class="slideshow-wrapper">
+    <div class="slides" id="slides">
+      <div class="slide active" style="--tilt: -2deg">
+        <div class="polaroid">
+          <img src="IMG_1471.JPEG" alt="" />
+        </div>
+      </div>
+      <div class="slide" style="--tilt: 2deg">
+        <div class="polaroid">
+          <img src="IMG_1666.jpg" alt="" />
+        </div>
+      </div>
+      <div class="slide" style="--tilt: -3deg">
+        <div class="polaroid">
+          <img src="IMG_1459.jpg" alt="" />
+        </div>
+      </div>
+      <div class="slide" style="--tilt: 1.5deg">
+        <div class="polaroid">
+          <img src="IMG_1686.jpg" alt="" />
+        </div>
+      </div>
+      <div class="slide" style="--tilt: -1deg">
+        <div class="polaroid">
+          <img src="IMG_1710.jpg" alt="" />
+        </div>
+      </div>
+      <div class="slide" style="--tilt: 3deg">
+        <div class="polaroid">
+          <img src="IMG_1712.jpg" alt="" />
+        </div>
+      </div>
+      <div class="slide" style="--tilt: -2.5deg">
+        <div class="polaroid">
+          <img src="IMG_1208.jpg" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAKE -->
+<section class="cake-section">
+  <h2>Něco si přej</h2>
+  <p class="cake-sub">a sfoukni svíčky</p>
+  <div class="cake-wrap" id="cakeBtn">
+    <span class="cake-emoji-big" id="cakeEmoji">🎂</span>
+  </div>
+  <p class="cake-hint">↑ klikni na dort</p>
+  <div class="candle-grid" id="candleGrid"></div>
+  <p style="color:#fff; font-size:0.95rem; margin-top:1rem;">Ty jo, to je nějak hodně svíček 😉</p>
+</section>
+
+<!-- GOOD STUFF -->
+<section class="good">
+  <p class="timer-label">I když to nemůžeme spolu pořádně oslavit dnes, tak si buď jistá, že si to vynahradíme za:</p>
+  <div class="timer-card">
+    <div class="countdown" id="countdown">
+      <div class="cblock"><span id="cd-days">--</span><label>dní</label></div>
+      <div class="cblock"><span id="cd-hours">--</span><label>hodin</label></div>
+      <div class="cblock"><span id="cd-mins">--</span><label>minut</label></div>
+      <div class="cblock"><span id="cd-secs">--</span><label>sekund</label></div>
+    </div>
+    <div class="timer-destination">✈️ přistání v Boloni</div>
+    <button class="kara-btn" id="karaBtn" onclick="document.getElementById('karaAudio').play()">
+      🔊 Děleeej
+    </button>
+    <audio id="karaAudio" src="kara.m4a"></audio>
+  </div>
+  <p>
+    S přáním krásných narozenin,<br>
+    <strong>tvůj Miško</strong>
+  </p>
+  <span class="big-heart">🩷</span>
+</section>
+
+<footer>Vyrobeno s láskou 🫶</footer>
+
+<script>
+  document.getElementById('popupBtn').addEventListener('click', () => {
+    document.getElementById('popup').style.display = 'none';
+    setTimeout(() => {
+      raining = true;
+      setTimeout(() => { raining = false; }, 5000);
+      triggerBurst();
+    }, 60);
+  });
+
+  // Slideshow
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+
+  function goTo(next) {
+    const exitClass = 'exit-left';
+    const prev = current;
+    slides[prev].classList.remove('active');
+    slides[prev].classList.add(exitClass);
+    setTimeout(() => slides[prev].classList.remove(exitClass), 500);
+    current = (next + slides.length) % slides.length;
+    slides[current].classList.add('active');
+  }
+
+  setInterval(() => { goTo(current + 1); }, 2000);
+
+  // Build grid candles (25)
+  const grid = document.getElementById('candleGrid');
+  for (let i = 0; i < 25; i++) {
+    const c = document.createElement('span');
+    c.className = 'candle';
+    c.style.setProperty('--i', i);
+    c.textContent = '🕯️';
+    grid.appendChild(c);
+  }
+
+  // Click to blow out / relight
+  let blown = false;
+  document.getElementById('cakeBtn').addEventListener('click', () => {
+    blown = !blown;
+    document.getElementById('cakeEmoji').classList.toggle('blown', blown);
+    [...grid.querySelectorAll('.candle')].forEach((c, i) =>
+      setTimeout(() => c.classList.toggle('out', blown), i * 40)
+    );
+  });
+
+  // Countdown to Bologna arrival (29 May 2026, 20:35 CEST)
+  const arrival = new Date('2026-05-29T20:35:00+02:00');
+  function updateCountdown() {
+    const diff = arrival - new Date();
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML = '<p style="color:#ff9500;font-size:1.8rem;font-weight:700;">Přistáno! ✈️</p>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent  = String(d).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-mins').textContent  = String(m).padStart(2, '0');
+    document.getElementById('cd-secs').textContent  = String(s).padStart(2, '0');
+    setTimeout(updateCountdown, 1000);
+  }
+  updateCountdown();
+
+  // Confetti
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  function resizeCanvas() {
+    W = canvas.width = (window.visualViewport ? window.visualViewport.width : window.innerWidth);
+    H = canvas.height = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', resizeCanvas);
+
+  const COLORS = ['#ff2d78','#ff9500','#ffe600','#00e5ff','#bf5fff','#fff'];
+  const pieces = Array.from({ length: 120 }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight - window.innerHeight,
+    r: Math.random() * 6 + 4,
+    d: Math.random() * 120,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    tiltAngle: 0,
+    tiltSpeed: Math.random() * 0.1 + 0.05,
+  }));
+
+  let burst = [];
+
+  function triggerBurst() {
+    const cx = W / 2, cy = H / 2;
+    for (let i = 0; i < 300; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 22 + 6;
+      burst.push({
+        x: cx, y: cy,
+        vx: Math.cos(a) * speed,
+        vy: Math.sin(a) * speed - 10,
+        r: Math.random() * 8 + 4,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        alpha: 1,
+        tiltAngle: Math.random() * Math.PI * 2,
+        tiltSpeed: Math.random() * 0.2 + 0.05,
+        shape: Math.random() > 0.5 ? 'rect' : 'circle',
+      });
+    }
+    if (!rafId) rafId = requestAnimationFrame(draw);
+  }
+
+  let raining = false;
+
+  let angle = 0;
+  let rafId;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    angle += 0.01;
+
+    let anyVisible = false;
+    pieces.forEach(p => {
+      if (p.y < H + 20) anyVisible = true;
+      p.tiltAngle += p.tiltSpeed;
+      p.y += Math.cos(angle + p.d) + 1.5;
+      p.x += Math.sin(angle) * 0.5;
+      const tilt = Math.sin(p.tiltAngle) * 12;
+      ctx.beginPath();
+      ctx.lineWidth = p.r;
+      ctx.strokeStyle = p.color;
+      ctx.moveTo(p.x + tilt + p.r / 2, p.y);
+      ctx.lineTo(p.x + tilt, p.y + tilt + p.r);
+      ctx.stroke();
+      if (p.y > H) {
+        if (raining) { p.y = -10; p.x = Math.random() * W; }
+        else { p.y = H + 100; }
+      }
+    });
+
+    burst = burst.filter(p => p.alpha > 0.02);
+    burst.forEach(p => {
+      p.vy += 0.5;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= 0.98;
+      p.tiltAngle += p.tiltSpeed;
+      p.alpha -= 0.012;
+      ctx.save();
+      ctx.globalAlpha = Math.max(p.alpha, 0);
+      ctx.fillStyle = p.color;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.tiltAngle);
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.r / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    });
+
+    if (anyVisible || raining || burst.length > 0) rafId = requestAnimationFrame(draw);
+    else { ctx.clearRect(0, 0, W, H); rafId = null; }
+  }
+
+</script>
+
+</body>
+</html>

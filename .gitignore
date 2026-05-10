@@ -1,0 +1,6 @@
+.DS_Store
+*.HEIF
+CONTEXT.md
+HOW_TO_USE.md
+generate_guide.py
+site_live_guide.pdf
