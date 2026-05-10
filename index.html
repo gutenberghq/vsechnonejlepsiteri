@@ -371,14 +371,14 @@
 
     .candle {
       font-size: 2rem;
-      filter: drop-shadow(0 0 6px rgba(255,200,50,0.9));
+      text-shadow: 0 0 6px rgba(255,200,50,0.9);
       animation: flicker 0.7s ease-in-out infinite alternate;
       animation-delay: calc(var(--i) * 0.06s);
       transition: opacity 0.3s, transform 0.3s;
     }
 
     .candle.out {
-      filter: none;
+      text-shadow: none;
       opacity: 0.25;
       animation: none;
       transform: scale(0.85);
