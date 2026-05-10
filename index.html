@@ -347,22 +347,17 @@
       touch-action: manipulation;
     }
 
-    .cake-wrap {
-      filter: drop-shadow(0 0 24px rgba(255,149,0,0.5));
-      transition: transform 0.2s, filter 0.6s;
-    }
-
-    .cake-wrap:hover { transform: scale(1.06); filter: drop-shadow(0 0 40px rgba(255,149,0,0.8)); }
-
-    .cake-wrap.blown,
-    .cake-wrap:hover.blown {
-      filter: grayscale(1) brightness(0.5);
-    }
+    .cake-wrap:hover { transform: scale(1.06); }
 
     .cake-emoji-big {
       font-size: 9rem;
       line-height: 1;
       display: block;
+      transition: opacity 0.6s;
+    }
+
+    .cake-emoji-big.blown {
+      opacity: 0.2;
     }
 
     .candle-grid {
@@ -628,7 +623,7 @@
   let blown = false;
   document.getElementById('cakeBtn').addEventListener('click', () => {
     blown = !blown;
-    document.getElementById('cakeBtn').classList.toggle('blown', blown);
+    document.getElementById('cakeEmoji').classList.toggle('blown', blown);
     [...grid.querySelectorAll('.candle')].forEach((c, i) =>
       setTimeout(() => c.classList.toggle('out', blown), i * 40)
     );
